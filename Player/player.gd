@@ -1,9 +1,27 @@
 extends CharacterBody2D
+
+class_name Player
+
+signal healthChanged
+
 @export var speed: int = 65
 @onready var animations = $AnimationPlayer
-@onready var hurtColor = $Sprite2D/ColorRect
- 
-var currentHealth: int = 3
+@onready var effects = $Effect
+@onready var hurtBox = $hurtbox
+@onready var hurtTimer = $hurtTimer
+@export var maxHealth = 3
+@onready var currentHealth: int = 12
+
+@export var knockbackPower: int = 500
+
+@export var inventory: Inventory
+
+var isHurt: bool = false
+
+
+func _ready():
+	effects.play("RESET")
+	
 
 func handleInput():
 	var moveDirection = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -27,14 +45,43 @@ func handleCollision ():
 		var collider = collision.get_collider()
 		
 		
+		
 func _physics_process(delta):
 	move_and_slide()
 	handleInput()
 	handleCollision()
 	updateAnimation()
+	if !isHurt:
+		for area in hurtBox.get_overlapping_areas():
+			if area.name == "hitBox":
+				hurtByEnemy(area)
 
-func _on_hit_box_area_entered(area):
-	if area.name == "hitBox":
-		currentHealth -=1
-		print_debug(currentHealth)
-		
+func hurtByEnemy(area):
+		currentHealth -= 1
+		healthChanged.emit(currentHealth)
+		isHurt=true
+		if currentHealth <= 0:
+			currentHealth = 12
+		knockback(area.get_parent().velocity)
+		effects.play("hurtBlink")
+		hurtTimer.start()
+		await hurtTimer.timeout
+		effects.play("RESET")
+		isHurt = false
+
+func _on_hurtbox_area_entered(area):
+	if area.has_method("collect"):
+		area.collect()
+		currentHealth +=1
+		healthChanged.emit(currentHealth)
+
+	
+func knockback(enemyVelocity: Vector2):
+	var knockbackDirection = (enemyVelocity - velocity).normalized() * knockbackPower
+	velocity = knockbackDirection
+	move_and_slide()
+	
+
+
+func _on_hurtbox_area_exited(area):pass
+
