@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://crk25utgx2cef" path="res://scenes/slot.tscn" id="2_6gnjd"]
 
 [node name="InventoryGui" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -23,6 +24,7 @@ patch_margin_right = 6
 patch_margin_bottom = 6
 
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

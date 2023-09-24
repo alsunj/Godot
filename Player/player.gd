@@ -71,7 +71,7 @@ func hurtByEnemy(area):
 
 func _on_hurtbox_area_entered(area):
 	if area.has_method("collect"):
-		area.collect()
+		area.collect(inventory)
 		currentHealth +=1
 		healthChanged.emit(currentHealth)
 

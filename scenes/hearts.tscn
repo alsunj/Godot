@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/hearts.gd" id="1_m0m0r"]
 
 [node name="Hearts" type="HBoxContainer"]
+texture_filter = 1
 layout_direction = 3
 anchors_preset = 1
 anchor_left = 1.0

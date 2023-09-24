@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d08uuw13cjdv2"]
+[gd_scene load_steps=9 format=3 uid="uid://d08uuw13cjdv2"]
 
 [ext_resource type="PackedScene" uid="uid://7c6f3wvgoip6" path="res://scenes/collectable.tscn" id="1_s0g70"]
 [ext_resource type="Texture2D" uid="uid://ljhpewmdlsk7" path="res://art/Sprite.png" id="2_c8ri4"]
 [ext_resource type="Script" path="res://scenes/sword.gd" id="2_vs51a"]
+[ext_resource type="Resource" uid="uid://b1ju03c52rxll" path="res://Inventory/sword.tres" id="3_wg5y3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bwtje"]
 resource_local_to_scene = true
@@ -47,8 +48,8 @@ _data = {
 }
 
 [node name="Sword" instance=ExtResource("1_s0g70")]
-texture_filter = 1
 script = ExtResource("2_vs51a")
+itemRes = ExtResource("3_wg5y3")
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("RectangleShape2D_bwtje")
